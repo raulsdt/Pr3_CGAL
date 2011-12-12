@@ -106,3 +106,11 @@ void Xml::escribeXml(vector<float> vx, vector<float> vy){
     }
 
 }
+
+void Xml::setRuta(QString r){
+    ruta = r;
+}
+
+QString Xml::getRuta(){
+    return ruta;
+}

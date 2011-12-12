@@ -15,6 +15,8 @@ public:
     Xml(QString ruta);
     bool leerXml(vector<float> *vx,vector<float> *vy);
     void escribeXml(vector<float> vx, vector<float> vy);
+    void setRuta(QString r);
+    QString getRuta();
 };
 
 #endif // XML_H
