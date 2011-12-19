@@ -6,7 +6,7 @@
 
 QT       += core
 
-QT       -= gui
+QT       += gui
 
 QT       += xml
 
@@ -19,12 +19,20 @@ TEMPLATE = app
 
 SOURCES += main.cpp \
     delaunay.cpp \
-    xml.cpp
+    xml.cpp \
+    lienzo.cpp \
+    mainwindow.cpp
 
 HEADERS += \
     delaunay.h \
-    xml.h
+    xml.h \
+    lienzo.h \
+    mainwindow.h
 
 LIBS += -lCGAL
 
 LIBS += -lgmp
+
+FORMS += \
+    lienzo.ui \
+    mainwindow.ui

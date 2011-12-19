@@ -1,8 +1,9 @@
-#include <QtCore/QCoreApplication>
+#include <QtGui/QApplication>
 #include <iostream>
 #include <fstream>
 #include <vector>
 #include <list>
+#include "mainwindow.h"
 
 #include "xml.h"
 #include "delaunay.h"
@@ -10,8 +11,14 @@
 using namespace std;
 
 int main(int argc, char *argv[]){
-    QCoreApplication a(argc, argv);
+    QApplication a(argc, argv);
 
+    MainWindow interfaz;
+    interfaz.show();
+
+
+
+/*
     //Vectore X e Y para almacenar los puntos del fichero XML
     vector<float> vx;
     vector<float> vy;
@@ -60,6 +67,6 @@ int main(int argc, char *argv[]){
     //Preparamos XML para escribir
     archivoXML.setRuta("../../data/resultado.xml");
     archivoXML.escribeXml(px,py);
-
-    return 0;
+*/
+    return a.exec();
 }
