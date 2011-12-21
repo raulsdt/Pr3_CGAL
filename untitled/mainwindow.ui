@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>QDelaunay</string>
   </property>
   <widget class="QWidget" name="centralwidget"/>
   <widget class="QMenuBar" name="menubar">
@@ -20,12 +20,157 @@
      <x>0</x>
      <y>0</y>
      <width>471</width>
-     <height>25</height>
+     <height>21</height>
     </rect>
    </property>
+   <widget class="QMenu" name="menuArchivo">
+    <property name="title">
+     <string>Archivo</string>
+    </property>
+    <addaction name="actionCargar_archivo"/>
+    <addaction name="actionGuardar_archivo"/>
+    <addaction name="separator"/>
+    <addaction name="actionSalir"/>
+   </widget>
+   <widget class="QMenu" name="menuOperaciones">
+    <property name="title">
+     <string>Operaciones</string>
+    </property>
+    <addaction name="actionInsertar_puntos"/>
+    <addaction name="actionTriangular_puntos"/>
+    <addaction name="actionLocalizar_puntos"/>
+    <addaction name="separator"/>
+    <addaction name="actionBorra_pantalla"/>
+   </widget>
+   <widget class="QMenu" name="menuAcerca_de">
+    <property name="title">
+     <string>Acerca de...</string>
+    </property>
+    <addaction name="actionInformaci_n"/>
+   </widget>
+   <addaction name="menuArchivo"/>
+   <addaction name="menuOperaciones"/>
+   <addaction name="menuAcerca_de"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
+  <widget class="QToolBar" name="toolBar">
+   <property name="windowTitle">
+    <string>toolBar</string>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="actionInsertar_puntos"/>
+   <addaction name="actionTriangular_puntos"/>
+   <addaction name="actionLocalizar_puntos"/>
+   <addaction name="separator"/>
+   <addaction name="actionBorra_pantalla"/>
+  </widget>
+  <action name="actionCargar_archivo">
+   <property name="icon">
+    <iconset resource="iconos/iconos.qrc">
+     <normaloff>:/fileopen.png</normaloff>:/fileopen.png</iconset>
+   </property>
+   <property name="text">
+    <string>Cargar archivo</string>
+   </property>
+   <property name="shortcut">
+    <string>Alt+C</string>
+   </property>
+  </action>
+  <action name="actionGuardar_archivo">
+   <property name="icon">
+    <iconset resource="iconos/iconos.qrc">
+     <normaloff>:/filesave.png</normaloff>:/filesave.png</iconset>
+   </property>
+   <property name="text">
+    <string>Guardar archivo</string>
+   </property>
+   <property name="shortcut">
+    <string>Alt+G</string>
+   </property>
+  </action>
+  <action name="actionSalir">
+   <property name="icon">
+    <iconset resource="iconos/iconos.qrc">
+     <normaloff>:/quit.jpeg</normaloff>:/quit.jpeg</iconset>
+   </property>
+   <property name="text">
+    <string>Salir</string>
+   </property>
+   <property name="shortcut">
+    <string>Alt+S</string>
+   </property>
+  </action>
+  <action name="actionInsertar_puntos">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="iconos/iconos.qrc">
+     <normaloff>:/inputPoint.png</normaloff>:/inputPoint.png</iconset>
+   </property>
+   <property name="text">
+    <string>Insertar puntos</string>
+   </property>
+   <property name="shortcut">
+    <string>Alt+I</string>
+   </property>
+  </action>
+  <action name="actionTriangular_puntos">
+   <property name="icon">
+    <iconset resource="iconos/iconos.qrc">
+     <normaloff>:/Delaunay_triangulation_2.png</normaloff>:/Delaunay_triangulation_2.png</iconset>
+   </property>
+   <property name="text">
+    <string>Triangular puntos</string>
+   </property>
+   <property name="shortcut">
+    <string>Alt+T</string>
+   </property>
+  </action>
+  <action name="actionLocalizar_puntos">
+   <property name="icon">
+    <iconset resource="iconos/iconos.qrc">
+     <normaloff>:/demo_pointlocation.xpm</normaloff>:/demo_pointlocation.xpm</iconset>
+   </property>
+   <property name="text">
+    <string>Localizar puntos</string>
+   </property>
+   <property name="shortcut">
+    <string>Alt+L</string>
+   </property>
+  </action>
+  <action name="actionInformaci_n">
+   <property name="icon">
+    <iconset resource="iconos/iconos.qrc">
+     <normaloff>:/iconoAcercaDe.png</normaloff>:/iconoAcercaDe.png</iconset>
+   </property>
+   <property name="text">
+    <string>Acerca de...</string>
+   </property>
+   <property name="shortcut">
+    <string>Alt+A</string>
+   </property>
+  </action>
+  <action name="actionBorra_pantalla">
+   <property name="icon">
+    <iconset resource="iconos/iconos.qrc">
+     <normaloff>:/demo_delete.xpm</normaloff>:/demo_delete.xpm</iconset>
+   </property>
+   <property name="text">
+    <string>Borrar pantalla</string>
+   </property>
+   <property name="shortcut">
+    <string>Alt+B</string>
+   </property>
+  </action>
  </widget>
- <resources/>
+ <resources>
+  <include location="iconos/iconos.qrc"/>
+ </resources>
  <connections/>
 </ui>

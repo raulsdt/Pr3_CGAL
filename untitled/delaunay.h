@@ -49,6 +49,10 @@ private:
     Delaunay2D dt;
 public:
     Delaunay(vector<Point2D>::iterator begin,vector<Point2D>::iterator end);
+    Delaunay();
+
+    //Inserción de puntos
+    void insertarPuntos(vector<Point2D>::iterator begin,vector<Point2D>::iterator end);
 
     //Operaciones
     vector<Point2D> iteracionVertices();

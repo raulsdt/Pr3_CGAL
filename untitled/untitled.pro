@@ -36,3 +36,6 @@ LIBS += -lgmp
 FORMS += \
     lienzo.ui \
     mainwindow.ui
+
+RESOURCES += \
+    iconos/iconos.qrc

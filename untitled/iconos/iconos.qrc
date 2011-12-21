@@ -1,0 +1,14 @@
+<RCC>
+    <qresource prefix="/">
+        <file>cgal_logo.xpm</file>
+        <file>cgal_splash.gif</file>
+        <file>Delaunay_triangulation_2.png</file>
+        <file>demo_pointlocation.xpm</file>
+        <file>fileopen.png</file>
+        <file>filesave.png</file>
+        <file>iconoAcercaDe.png</file>
+        <file>inputPoint.png</file>
+        <file>quit.jpeg</file>
+        <file>demo_delete.xpm</file>
+    </qresource>
+</RCC>

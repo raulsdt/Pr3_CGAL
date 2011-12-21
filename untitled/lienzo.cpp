@@ -6,7 +6,9 @@ Lienzo::Lienzo(QWidget *parent) :
     ui(new Ui::Lienzo)
 {
     ui->setupUi(this);
-    puntos = vector<QPoint>(100);
+
+    ponerPuntos = false;
+    hacerTriangulacion = false;
 }
 
 Lienzo::~Lienzo()
@@ -31,20 +33,33 @@ void Lienzo::paintEvent(QPaintEvent *){
         pintor.drawPoint(convCoordX(puntos[i].x()),convCoordY(puntos[i].y()));
     }
 
+    list < pair<QPoint,QPoint> >::iterator  begin = ejes.begin();
+    list < pair<QPoint,QPoint> >::iterator  end = ejes.end();
+
+    for(;begin!=end;begin++){
+        //Estilo
+        QPen estiloLinea(Qt::red,1,Qt::SolidLine,Qt::RoundCap,Qt::MiterJoin);
+        pintor.setPen(estiloLinea);
+        pintor.drawLine(convCoordX(begin->first.x()),convCoordY(begin->first.y()),convCoordX(begin->second.x()),convCoordY(begin->second.y()));
+    }
+
 }
 
 
 void Lienzo::mousePressEvent(QMouseEvent *event){
-    cout << event->pos().x() << " | ";
-    cout << event->pos().y() << endl;
+    if(ponerPuntos){
+        //Guardamos punto
+        int coordX = InversaConvCoordX(event->pos().x());
+        int coordY = InversaConvCoordY(event->pos().y());
 
-    //Guardamos punto
-    int coordX = InversaConvCoordX(event->pos().x());
-    int coordY = InversaConvCoordY(event->pos().y());
+        QPoint p(coordX,coordY);
+        puntos.push_back(p);
+        update();
 
-    QPoint p(coordX,coordY);
-    puntos.push_back(p);
-    update();
+        if(puntos.size() >= 3){
+            hacerTriangulacion = true;
+        }
+    }
 }
 
 
@@ -64,4 +79,27 @@ int Lienzo::InversaConvCoordX(int x){
 
 int Lienzo::InversaConvCoordY(int y){
     return ( ( (-1 * y + height()) * 400 - 200 * height()) / (2 * height()) );
+}
+
+
+//Habilitación de la bandera de puntos
+
+bool Lienzo::getBanderaPuntos(){
+    return ponerPuntos;
+}
+
+void Lienzo::setBanderaPuntosTrue(){
+    ponerPuntos = true;
+}
+
+void Lienzo::setBanderaPuntosFalse(){
+    ponerPuntos = false;
+}
+
+bool Lienzo::getBanderaTriangulacion(){
+    return hacerTriangulacion;
+}
+
+void Lienzo::setBanderaTriangulacionFalse(){
+    hacerTriangulacion = false;
 }

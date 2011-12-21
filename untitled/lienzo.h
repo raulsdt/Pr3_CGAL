@@ -20,10 +20,19 @@ class Lienzo : public QWidget
 public:
     explicit Lienzo(QWidget *parent = 0);
     ~Lienzo();
+    vector<QPoint> puntos; //Array de puntos
+    list < pair<QPoint,QPoint> > ejes;
+
+    bool getBanderaPuntos();
+    void setBanderaPuntosTrue();
+    void setBanderaPuntosFalse();
+
+    bool getBanderaTriangulacion();
+    void setBanderaTriangulacionFalse();
 
 private:
-    vector<QPoint> puntos;
     Ui::Lienzo *ui;
+
 protected:
     void paintEvent(QPaintEvent *);
     void mousePressEvent(QMouseEvent *event);
@@ -31,6 +40,10 @@ protected:
     int convCoordY(int y);
     int InversaConvCoordX(int x);
     int InversaConvCoordY(int y);
+
+    //Habilitación de escritura de puntos
+    bool ponerPuntos;
+    bool hacerTriangulacion;
 };
 
 #endif // LIENZO_H

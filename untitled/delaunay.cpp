@@ -1,9 +1,17 @@
 #include "delaunay.h"
 
+Delaunay::Delaunay(){
+
+}
+
 Delaunay::Delaunay(vector<Point2D>::iterator begin,vector<Point2D>::iterator end){
     dt.insert(begin, end);
 }
 
+
+void Delaunay::insertarPuntos(vector<Point2D>::iterator begin,vector<Point2D>::iterator end){
+    dt.insert(begin, end);
+}
 
 vector<Point2D> Delaunay::iteracionVertices(){
     vector<Point2D> puntos;
@@ -53,5 +61,4 @@ void Delaunay::iteracionCaras(vector<float> *vx,vector<float> *vy){
         vy->push_back(p2[1]);
         vy->push_back(p3[1]);
     }
-
 }
