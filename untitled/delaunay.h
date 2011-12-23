@@ -38,6 +38,8 @@ typedef CGAL::Segment_Delaunay_graph_traits_2<K> Gt;
 typedef CGAL::Segment_Delaunay_graph_2<Gt> SDG2;
     //Utilizado para las caras
 typedef Delaunay2D::Finite_faces_iterator iterCaras;
+    //Utilizado para la localización
+typedef Delaunay2D::Face_handle manejadorCaras;
 
 
 
@@ -58,6 +60,7 @@ public:
     vector<Point2D> iteracionVertices();
     list< pair<Point2D,Point2D> > iteracionEjes();
     void iteracionCaras(vector<float> *vx,vector<float> *vy);
+    vector<Point2D> localizacion(Point2D p);
 };
 
 #endif // DELAUNAY_H

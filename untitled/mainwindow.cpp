@@ -41,7 +41,7 @@ void MainWindow::on_actionBorra_pantalla_triggered()
     l->ejes.clear();
 
     //Quitamos los puntos de Dalunay
-    dt = NULL;
+    delete dt;
     dt = new Delaunay();
     l->update();
 }
@@ -52,6 +52,12 @@ void MainWindow::on_actionTriangular_puntos_triggered(){
         //Poner mensaje de error: menos de tres puntos
         statusBar()->showMessage(trUtf8("Error: Triangulación no realizada. Menos de 3 puntos"),5000);
     }else{
+
+        //Borramos la triangulación anterior
+        delete dt;
+        dt = new Delaunay();
+        l->ejes.clear();
+
         //Hacemos la triangulación
         vector<Point2D> vPoint2D;
 
@@ -82,4 +88,42 @@ void MainWindow::on_actionTriangular_puntos_triggered(){
         l->update();
         statusBar()->showMessage(trUtf8("Triangulación realizada"),5000);
     }
+}
+
+
+void MainWindow::on_actionInsertar_puntos_localizacion_triggered()
+{
+}
+
+
+void MainWindow::on_actionInsertar_puntos_localizacion_toggled(bool arg1)
+{
+    if(arg1){
+        l->setBanderaLocalizacionTrue();
+    }else{
+        l->setBanderaLocalizacionFalse();
+    }
+}
+
+void MainWindow::on_actionLocalizar_puntos_triggered()
+{
+    l->zonasLocalizadas.clear();
+
+    vector<Point2D> triangulo;
+
+    for(int i = 0;i<l->puntosLocalizacion.size();i++){
+        Point2D punto(l->puntosLocalizacion[i].x(),l->puntosLocalizacion[i].y());
+        triangulo = dt->localizacion(punto);
+
+        cout << triangulo[0] << " | " << triangulo[1] << " | " << triangulo[2] << endl;
+
+        QPolygon poli;
+        poli.setPoint(1,triangulo[0].x(),triangulo[0].y());
+        poli.setPoint(2,triangulo[1].x(),triangulo[1].y());
+        poli.setPoint(3,triangulo[2].x(),triangulo[2].y());
+
+        l->zonasLocalizadas.push_back(poli);
+    }
+
+    l->update();
 }

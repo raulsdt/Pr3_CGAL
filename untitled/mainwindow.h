@@ -26,6 +26,12 @@ private slots:
 
     void on_actionTriangular_puntos_triggered();
 
+    void on_actionInsertar_puntos_localizacion_triggered();
+
+    void on_actionInsertar_puntos_localizacion_toggled(bool arg1);
+
+    void on_actionLocalizar_puntos_triggered();
+
 private:
     Ui::MainWindow *ui;
     Lienzo *l;

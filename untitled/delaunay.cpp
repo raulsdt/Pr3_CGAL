@@ -62,3 +62,18 @@ void Delaunay::iteracionCaras(vector<float> *vx,vector<float> *vy){
         vy->push_back(p3[1]);
     }
 }
+
+vector<Point2D> Delaunay::localizacion(Point2D p){
+    vector<Point2D> triangulo;
+    manejadorCaras zona = dt.locate(p);
+
+    Point2D p1 = dt.triangle(zona)[0];
+    Point2D p2 = dt.triangle(zona)[1];
+    Point2D p3 = dt.triangle(zona)[2];
+
+    triangulo.push_back(p1);
+    triangulo.push_back(p2);
+    triangulo.push_back(p3);
+
+    return triangulo;
+}

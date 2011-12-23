@@ -37,6 +37,7 @@
      <string>Operaciones</string>
     </property>
     <addaction name="actionInsertar_puntos"/>
+    <addaction name="actionInsertar_puntos_localizacion"/>
     <addaction name="actionTriangular_puntos"/>
     <addaction name="actionLocalizar_puntos"/>
     <addaction name="separator"/>
@@ -63,8 +64,13 @@
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
+   <addaction name="actionCargar_archivo"/>
+   <addaction name="actionGuardar_archivo"/>
+   <addaction name="separator"/>
    <addaction name="actionInsertar_puntos"/>
    <addaction name="actionTriangular_puntos"/>
+   <addaction name="separator"/>
+   <addaction name="actionInsertar_puntos_localizacion"/>
    <addaction name="actionLocalizar_puntos"/>
    <addaction name="separator"/>
    <addaction name="actionBorra_pantalla"/>
@@ -166,6 +172,21 @@
    </property>
    <property name="shortcut">
     <string>Alt+B</string>
+   </property>
+  </action>
+  <action name="actionInsertar_puntos_localizacion">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="iconos/iconos.qrc">
+     <normaloff>:/zoom-best-fit.png</normaloff>:/zoom-best-fit.png</iconset>
+   </property>
+   <property name="text">
+    <string>Insertar puntos localizacion</string>
+   </property>
+   <property name="shortcut">
+    <string>Alt+L</string>
    </property>
   </action>
  </widget>

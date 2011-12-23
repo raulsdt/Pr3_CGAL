@@ -10,5 +10,6 @@
         <file>inputPoint.png</file>
         <file>quit.jpeg</file>
         <file>demo_delete.xpm</file>
+        <file>zoom-best-fit.png</file>
     </qresource>
 </RCC>

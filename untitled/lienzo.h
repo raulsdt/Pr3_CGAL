@@ -21,7 +21,9 @@ public:
     explicit Lienzo(QWidget *parent = 0);
     ~Lienzo();
     vector<QPoint> puntos; //Array de puntos
-    list < pair<QPoint,QPoint> > ejes;
+    list < pair<QPoint,QPoint> > ejes; //Ejes de la triangulación
+    vector<QPolygon> zonasLocalizadas; //Array de triangulo con las localizaciones
+    vector<QPoint> puntosLocalizacion;
 
     bool getBanderaPuntos();
     void setBanderaPuntosTrue();
@@ -30,20 +32,26 @@ public:
     bool getBanderaTriangulacion();
     void setBanderaTriangulacionFalse();
 
+    void setBanderaLocalizacionTrue();
+    void setBanderaLocalizacionFalse();
+
+    int convCoordX(int x);
+    int convCoordY(int y);
+    int InversaConvCoordX(int x);
+    int InversaConvCoordY(int y);
+
 private:
     Ui::Lienzo *ui;
 
 protected:
     void paintEvent(QPaintEvent *);
     void mousePressEvent(QMouseEvent *event);
-    int convCoordX(int x);
-    int convCoordY(int y);
-    int InversaConvCoordX(int x);
-    int InversaConvCoordY(int y);
+
 
     //Habilitación de escritura de puntos
     bool ponerPuntos;
     bool hacerTriangulacion;
+    bool hacerLocalizaciones;
 };
 
 #endif // LIENZO_H
