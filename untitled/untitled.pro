@@ -21,13 +21,15 @@ SOURCES += main.cpp \
     delaunay.cpp \
     xml.cpp \
     lienzo.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    dialogacercade.cpp
 
 HEADERS += \
     delaunay.h \
     xml.h \
     lienzo.h \
-    mainwindow.h
+    mainwindow.h \
+    dialogacercade.h
 
 LIBS += -lCGAL
 
@@ -35,7 +37,8 @@ LIBS += -lgmp
 
 FORMS += \
     lienzo.ui \
-    mainwindow.ui
+    mainwindow.ui \
+    dialogacercade.ui
 
 RESOURCES += \
     iconos/iconos.qrc

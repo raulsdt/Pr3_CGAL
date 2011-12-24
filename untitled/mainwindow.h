@@ -4,6 +4,8 @@
 #include <QMainWindow>
 #include "lienzo.h"
 #include "delaunay.h"
+#include "dialogacercade.h"
+#include "xml.h"
 
 namespace Ui {
     class MainWindow;
@@ -32,6 +34,12 @@ private slots:
 
     void on_actionLocalizar_puntos_triggered();
 
+    void on_actionInformaci_n_triggered();
+
+    void on_actionGuardar_archivo_triggered();
+
+    void on_actionCargar_archivo_triggered();
+
 private:
     Ui::MainWindow *ui;
     Lienzo *l;
@@ -39,6 +47,10 @@ private:
     //Delaunay
     Delaunay *dt;
 
+    //Abrir archivo XML de puntos
+    bool abrirXML();
+    //Guardar archivo XML de puntos
+    bool guardarXML();
 };
 
 #endif // MAINWINDOW_H

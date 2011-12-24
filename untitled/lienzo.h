@@ -30,6 +30,7 @@ public:
     void setBanderaPuntosFalse();
 
     bool getBanderaTriangulacion();
+    void setBanderaTriangulacionTrue();
     void setBanderaTriangulacionFalse();
 
     void setBanderaLocalizacionTrue();

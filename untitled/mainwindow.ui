@@ -6,12 +6,16 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>471</width>
-    <height>350</height>
+    <width>559</width>
+    <height>390</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>QDelaunay</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="iconos/iconos.qrc">
+    <normaloff>:/cgal_logo.xpm</normaloff>:/cgal_logo.xpm</iconset>
   </property>
   <widget class="QWidget" name="centralwidget"/>
   <widget class="QMenuBar" name="menubar">
@@ -19,7 +23,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>471</width>
+     <width>559</width>
      <height>21</height>
     </rect>
    </property>
@@ -37,8 +41,9 @@
      <string>Operaciones</string>
     </property>
     <addaction name="actionInsertar_puntos"/>
-    <addaction name="actionInsertar_puntos_localizacion"/>
     <addaction name="actionTriangular_puntos"/>
+    <addaction name="separator"/>
+    <addaction name="actionInsertar_puntos_localizacion"/>
     <addaction name="actionLocalizar_puntos"/>
     <addaction name="separator"/>
     <addaction name="actionBorra_pantalla"/>

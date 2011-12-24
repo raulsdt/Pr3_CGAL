@@ -1,18 +1,34 @@
 #include "delaunay.h"
 
+/**
+  @brief Constructor por defecto
+  */
 Delaunay::Delaunay(){
 
 }
 
+/**
+  @brief Constructor pasando dos iteradores de inicio y fin del vector que contiene los puntos de triangulación
+  @param
+  @param
+  */
 Delaunay::Delaunay(vector<Point2D>::iterator begin,vector<Point2D>::iterator end){
     dt.insert(begin, end);
 }
 
-
+/**
+  @brief insertar puntos dados dos iteradores
+  @param
+  @param
+  */
 void Delaunay::insertarPuntos(vector<Point2D>::iterator begin,vector<Point2D>::iterator end){
     dt.insert(begin, end);
 }
 
+/**
+  @brief Iterador de vetices de la triangulación
+  @return
+  */
 vector<Point2D> Delaunay::iteracionVertices(){
     vector<Point2D> puntos;
     Delaunay2D::Vertex_iterator iterVertices;
@@ -23,6 +39,10 @@ vector<Point2D> Delaunay::iteracionVertices(){
     return puntos;
 }
 
+/**
+  @brief Iterador de ejes (aristas) de la triangulación
+  @return
+  */
 list< pair<Point2D,Point2D> > Delaunay::iteracionEjes(){
     list< pair<Point2D,Point2D> > listaEjes;
     Delaunay2D::Edge_iterator iterEjes;
@@ -44,6 +64,12 @@ list< pair<Point2D,Point2D> > Delaunay::iteracionEjes(){
     return listaEjes;
 }
 
+
+/**
+  @brief Iterador de caras (triangulos) de la triangulación
+  @param
+  @param
+  */
 void Delaunay::iteracionCaras(vector<float> *vx,vector<float> *vy){
     iterCaras itc = dt.finite_faces_begin();
 
@@ -63,17 +89,29 @@ void Delaunay::iteracionCaras(vector<float> *vx,vector<float> *vy){
     }
 }
 
+/**
+  @brief Localizador de puntos en la triangulación de Delaunay
+  @param
+  @return
+  */
 vector<Point2D> Delaunay::localizacion(Point2D p){
     vector<Point2D> triangulo;
-    manejadorCaras zona = dt.locate(p);
 
-    Point2D p1 = dt.triangle(zona)[0];
-    Point2D p2 = dt.triangle(zona)[1];
-    Point2D p3 = dt.triangle(zona)[2];
+    try{
+        manejadorCaras zona = dt.locate(p);
 
-    triangulo.push_back(p1);
-    triangulo.push_back(p2);
-    triangulo.push_back(p3);
+        Point2D p1 = dt.triangle(zona)[0];
+        Point2D p2 = dt.triangle(zona)[1];
+        Point2D p3 = dt.triangle(zona)[2];
+
+        triangulo.push_back(p1);
+        triangulo.push_back(p2);
+        triangulo.push_back(p3);
+
+    }catch(...){
+        cout << "FUERA DE LA TRIANGULACIÓN" << endl;
+        return triangulo;
+    }
 
     return triangulo;
 }

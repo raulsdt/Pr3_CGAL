@@ -11,6 +11,11 @@ MainWindow::MainWindow(QWidget *parent) :
 
     //Construimos Delaunay
     dt = new Delaunay();
+
+    //Desactivamos opciones
+    ui->actionGuardar_archivo->setEnabled(false);
+    ui->actionInsertar_puntos_localizacion->setEnabled(false);
+    ui->actionLocalizar_puntos->setEnabled(false);
 }
 
 MainWindow::~MainWindow()
@@ -18,11 +23,17 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+/**
+  Evento de salida
+  */
 void MainWindow::on_actionSalir_triggered()
 {
     exit(0);
 }
 
+/**
+  Evento para insertar puntos
+  */
 void MainWindow::on_actionInsertar_puntos_toggled(bool arg1)
 {
     if(arg1){
@@ -34,24 +45,52 @@ void MainWindow::on_actionInsertar_puntos_toggled(bool arg1)
     }
 }
 
+/**
+  Evento para borrar pantalla
+  */
 void MainWindow::on_actionBorra_pantalla_triggered()
 {
     l->setBanderaTriangulacionFalse();
     l->puntos.clear();
     l->ejes.clear();
+    l->puntosLocalizacion.clear();
+    l->zonasLocalizadas.clear();
+
+    //Opciones de menú
+    ui->actionCargar_archivo->setEnabled(true);
+    ui->actionGuardar_archivo->setEnabled(false);
+    ui->actionInsertar_puntos->setEnabled(true);
+    ui->actionTriangular_puntos->setEnabled(true);
+    ui->actionInsertar_puntos_localizacion->setEnabled(false);
+    ui->actionLocalizar_puntos->setEnabled(false);
+
+    l->setBanderaPuntosFalse();
+    l->setBanderaTriangulacionFalse();
+    l->setBanderaLocalizacionFalse();
 
     //Quitamos los puntos de Dalunay
     delete dt;
     dt = new Delaunay();
+
+    statusBar()->showMessage(trUtf8("Pantalla borrada"),2000);
     l->update();
 }
 
+
+/**
+  Evento triangulación de Delaunay
+  */
 void MainWindow::on_actionTriangular_puntos_triggered(){
 
     if(l->getBanderaTriangulacion() == false){
         //Poner mensaje de error: menos de tres puntos
         statusBar()->showMessage(trUtf8("Error: Triangulación no realizada. Menos de 3 puntos"),5000);
     }else{
+
+        //Habilitamos la localización
+        ui->actionGuardar_archivo->setEnabled(true);
+        ui->actionInsertar_puntos_localizacion->setEnabled(true);
+        ui->actionLocalizar_puntos->setEnabled(true);
 
         //Borramos la triangulación anterior
         delete dt;
@@ -86,7 +125,7 @@ void MainWindow::on_actionTriangular_puntos_triggered(){
         }
 
         l->update();
-        statusBar()->showMessage(trUtf8("Triangulación realizada"),5000);
+        statusBar()->showMessage(trUtf8("Triangulación realizada"),2000);
     }
 }
 
@@ -96,15 +135,29 @@ void MainWindow::on_actionInsertar_puntos_localizacion_triggered()
 }
 
 
+/**
+  Evento para insertar puntos de localización
+  */
 void MainWindow::on_actionInsertar_puntos_localizacion_toggled(bool arg1)
 {
+    //Cuando pulsamos para localizar deshabilitamos la inserción de puntos
+    ui->actionCargar_archivo->setEnabled(false);
+    ui->actionInsertar_puntos->setEnabled(false);
+    ui->actionTriangular_puntos->setEnabled(false);
+    l->setBanderaPuntosFalse();
+
     if(arg1){
         l->setBanderaLocalizacionTrue();
+        statusBar()->showMessage(trUtf8("Inserción de puntos de localización ACTIVADA"),5000);
     }else{
         l->setBanderaLocalizacionFalse();
+        statusBar()->showMessage(trUtf8("Inserción de puntos de localización DESACTIVAD"),5000);
     }
 }
 
+/**
+  Evento para localizar los puntos de localización insertados
+  */
 void MainWindow::on_actionLocalizar_puntos_triggered()
 {
     l->zonasLocalizadas.clear();
@@ -113,17 +166,98 @@ void MainWindow::on_actionLocalizar_puntos_triggered()
 
     for(int i = 0;i<l->puntosLocalizacion.size();i++){
         Point2D punto(l->puntosLocalizacion[i].x(),l->puntosLocalizacion[i].y());
+
         triangulo = dt->localizacion(punto);
 
-        cout << triangulo[0] << " | " << triangulo[1] << " | " << triangulo[2] << endl;
+        if(triangulo.size() != 0){
+            QPolygon poli;
+            poli.setPoint(1,triangulo[0].x(),triangulo[0].y());
+            poli.setPoint(2,triangulo[1].x(),triangulo[1].y());
+            poli.setPoint(3,triangulo[2].x(),triangulo[2].y());
 
-        QPolygon poli;
-        poli.setPoint(1,triangulo[0].x(),triangulo[0].y());
-        poli.setPoint(2,triangulo[1].x(),triangulo[1].y());
-        poli.setPoint(3,triangulo[2].x(),triangulo[2].y());
-
-        l->zonasLocalizadas.push_back(poli);
+            l->zonasLocalizadas.push_back(poli);
+        }
     }
 
+    statusBar()->showMessage(trUtf8("Localización realizada"),5000);
     l->update();
+}
+
+void MainWindow::on_actionInformaci_n_triggered()
+{
+    DialogAcercaDe *acerca = new DialogAcercaDe(this);
+    acerca->exec(); //Dialogo MODAL
+}
+
+/**
+  @brief Abre un archivo XML de puntos para realizar triangulación
+  */
+bool MainWindow::abrirXML(){
+    QString fileName = QFileDialog::getOpenFileName(this,trUtf8("Cargar triangulación"),".xml",trUtf8("XML (*.xml)"));
+    if(fileName.isEmpty()){
+        return false;
+    }else{
+        //Habilitamos triangulación
+        l->setBanderaTriangulacionTrue();
+
+        //Abrimos el archivo y pintamos los puntos
+        Xml archivo(fileName);
+        vector<float> vx;
+        vector<float> vy;
+
+        archivo.leerXml(&vx,&vy);
+
+        for(int i = 0; i < vx.size();i++){
+            l->puntos.push_back(QPoint((int)vx[i],(int)vy[i]));
+        }
+
+        l->update();
+
+        //Activamos la triangulación
+        l->setBanderaTriangulacionTrue();
+
+        return true;
+    }
+}
+
+/**
+  @brief Guarda una archivo XML de puntos resultante de una triangulación
+  */
+bool MainWindow::guardarXML(){
+    QString fileName = QFileDialog::getSaveFileName(this,trUtf8("Guardar puntos de la triangulación"),".xml",trUtf8("XML (*.xml)"));
+    if(fileName.isEmpty()){
+        return false;
+    }else{
+        //Guardamos archivo
+        Xml archivo(fileName);
+        vector<float> vx;
+        vector<float> vy;
+
+        for(int i = 0; i< l->puntos.size();i++){
+            vx.push_back(l->puntos[i].x());
+            vy.push_back(l->puntos[i].y());
+        }
+
+        archivo.escribeXml(vx,vy);
+        return true;
+    }
+
+}
+
+void MainWindow::on_actionGuardar_archivo_triggered()
+{
+    if(guardarXML()){
+        statusBar()->showMessage(trUtf8("Archivo guardado correctamente"),5000);
+    }else{
+        statusBar()->showMessage(trUtf8("Error al guardar el archivo"),5000);
+    }
+}
+
+void MainWindow::on_actionCargar_archivo_triggered()
+{
+    if(abrirXML()){
+        statusBar()->showMessage(trUtf8("Archivo cargado correctamente"),5000);
+    }else{
+        statusBar()->showMessage(trUtf8("Error al cargar el archivo"),5000);
+    }
 }
