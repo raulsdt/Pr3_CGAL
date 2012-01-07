@@ -50,13 +50,10 @@ void MainWindow::on_actionInsertar_puntos_toggled(bool arg1)
   */
 void MainWindow::on_actionBorra_pantalla_triggered()
 {
-    l->setBanderaTriangulacionFalse();
-    l->puntos.clear();
-    l->ejes.clear();
-    l->puntosLocalizacion.clear();
-    l->zonasLocalizadas.clear();
-
     //Opciones de menú
+    ui->actionInsertar_puntos->setChecked(false);
+    ui->actionInsertar_puntos_localizacion->setChecked(false);
+
     ui->actionCargar_archivo->setEnabled(true);
     ui->actionGuardar_archivo->setEnabled(false);
     ui->actionInsertar_puntos->setEnabled(true);
@@ -71,6 +68,13 @@ void MainWindow::on_actionBorra_pantalla_triggered()
     //Quitamos los puntos de Dalunay
     delete dt;
     dt = new Delaunay();
+
+    l->setBanderaTriangulacionFalse();
+    l->puntos->clear();
+    l->ejes->clear();
+    l->puntosLocalizacion->clear();
+    l->zonasLocalizadas->clear();
+
 
     statusBar()->showMessage(trUtf8("Pantalla borrada"),2000);
     l->update();
@@ -95,13 +99,13 @@ void MainWindow::on_actionTriangular_puntos_triggered(){
         //Borramos la triangulación anterior
         delete dt;
         dt = new Delaunay();
-        l->ejes.clear();
+        l->ejes->clear();
 
         //Hacemos la triangulación
         vector<Point2D> vPoint2D;
 
-        for(int i = 0; i < l->puntos.size();i++){
-            Point2D p = Point2D(l->puntos[i].x(),l->puntos[i].y());
+        for(int i = 0; i < l->puntos->size();i++){
+            Point2D p = Point2D(l->puntos->at(i).x(),l->puntos->at(i).y());
             vPoint2D.push_back(p);
         }
 
@@ -121,7 +125,7 @@ void MainWindow::on_actionTriangular_puntos_triggered(){
             QPoint p1(ejesBegin->first.x(),ejesBegin->first.y());
             QPoint p2(ejesBegin->second.x(),ejesBegin->second.y());
             pair<QPoint,QPoint> par(p1,p2);
-            l->ejes.push_back(par);
+            l->ejes->push_back(par);
         }
 
         l->update();
@@ -160,12 +164,12 @@ void MainWindow::on_actionInsertar_puntos_localizacion_toggled(bool arg1)
   */
 void MainWindow::on_actionLocalizar_puntos_triggered()
 {
-    l->zonasLocalizadas.clear();
+    l->zonasLocalizadas->clear();
 
     vector<Point2D> triangulo;
 
-    for(int i = 0;i<l->puntosLocalizacion.size();i++){
-        Point2D punto(l->puntosLocalizacion[i].x(),l->puntosLocalizacion[i].y());
+    for(int i = 0;i<l->puntosLocalizacion->size();i++){
+        Point2D punto(l->puntosLocalizacion->at(i).x(),l->puntosLocalizacion->at(i).y());
 
         triangulo = dt->localizacion(punto);
 
@@ -175,7 +179,7 @@ void MainWindow::on_actionLocalizar_puntos_triggered()
             poli.setPoint(2,triangulo[1].x(),triangulo[1].y());
             poli.setPoint(3,triangulo[2].x(),triangulo[2].y());
 
-            l->zonasLocalizadas.push_back(poli);
+            l->zonasLocalizadas->push_back(poli);
         }
     }
 
@@ -208,7 +212,7 @@ bool MainWindow::abrirXML(){
         archivo.leerXml(&vx,&vy);
 
         for(int i = 0; i < vx.size();i++){
-            l->puntos.push_back(QPoint((int)vx[i],(int)vy[i]));
+            l->puntos->push_back(QPoint((int)vx[i],(int)vy[i]));
         }
 
         l->update();
@@ -233,9 +237,9 @@ bool MainWindow::guardarXML(){
         vector<float> vx;
         vector<float> vy;
 
-        for(int i = 0; i< l->puntos.size();i++){
-            vx.push_back(l->puntos[i].x());
-            vy.push_back(l->puntos[i].y());
+        for(int i = 0; i< l->puntos->size();i++){
+            vx.push_back(l->puntos->at(i).x());
+            vy.push_back(l->puntos->at(i).y());
         }
 
         archivo.escribeXml(vx,vy);

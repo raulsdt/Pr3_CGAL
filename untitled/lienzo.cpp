@@ -10,6 +10,11 @@ Lienzo::Lienzo(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    puntos = new vector<QPoint>();
+    ejes = new list < pair<QPoint,QPoint> >();
+    zonasLocalizadas = new vector<QPolygon>();
+    puntosLocalizacion = new vector<QPoint>();
+
     ponerPuntos = false;
     hacerTriangulacion = false;
     hacerLocalizaciones = false;
@@ -43,13 +48,13 @@ void Lienzo::paintEvent(QPaintEvent *){
     QPen estilo(Qt::black,5,Qt::SolidLine,Qt::RoundCap,Qt::MiterJoin);
     pintor.setPen(estilo);
 
-    for(int i = 0;i < puntos.size();i++){
-        pintor.drawPoint(convCoordX(puntos[i].x()),convCoordY(puntos[i].y()));
+    for(int i = 0;i < puntos->size();i++){
+        pintor.drawPoint(convCoordX((*puntos)[i].x()),convCoordY((*puntos)[i].y()));
     }
 
     //Dibujamos ejes de la Triangulación
-    list < pair<QPoint,QPoint> >::iterator  begin = ejes.begin();
-    list < pair<QPoint,QPoint> >::iterator  end = ejes.end();
+    list < pair<QPoint,QPoint> >::iterator  begin = ejes->begin();
+    list < pair<QPoint,QPoint> >::iterator  end = ejes->end();
 
     QPen estiloLinea(Qt::red,1,Qt::SolidLine,Qt::RoundCap,Qt::MiterJoin);
     pintor.setPen(estiloLinea);
@@ -62,11 +67,11 @@ void Lienzo::paintEvent(QPaintEvent *){
     QBrush estiloZona(Qt::yellow,Qt::DiagCrossPattern);
     pintor.setBrush(estiloZona);
 
-    for(int i = 0; i < zonasLocalizadas.size();i++){
+    for(int i = 0; i < zonasLocalizadas->size();i++){
 
-        QPoint p1 = zonasLocalizadas[i].point(1);
-        QPoint p2 = zonasLocalizadas[i].point(2);
-        QPoint p3 = zonasLocalizadas[i].point(3);
+        QPoint p1 = (*zonasLocalizadas)[i].point(1);
+        QPoint p2 = (*zonasLocalizadas)[i].point(2);
+        QPoint p3 = (*zonasLocalizadas)[i].point(3);
 
         QPolygon poli;
         poli << QPoint(convCoordX(p1.x()),convCoordY(p1.y()));
@@ -80,8 +85,8 @@ void Lienzo::paintEvent(QPaintEvent *){
     QPen estiloPuntoLocalizado(Qt::darkBlue,5,Qt::SolidLine,Qt::RoundCap,Qt::MiterJoin);
     pintor.setPen(estiloPuntoLocalizado);
 
-    for(int i = 0;i < puntosLocalizacion.size();i++){    
-        pintor.drawPoint(convCoordX(puntosLocalizacion[i].x()),convCoordY(puntosLocalizacion[i].y()));
+    for(int i = 0;i < puntosLocalizacion->size();i++){
+        pintor.drawPoint(convCoordX((*puntosLocalizacion)[i].x()),convCoordY((*puntosLocalizacion)[i].y()));
     }
 
 }
@@ -96,9 +101,9 @@ void Lienzo::mousePressEvent(QMouseEvent *event){
         int coordY = InversaConvCoordY(event->pos().y());
 
         QPoint p(coordX,coordY);
-        puntos.push_back(p);
+        puntos->push_back(p);
 
-        if(puntos.size() >= 3){
+        if(puntos->size() >= 3){
             hacerTriangulacion = true;
         }
     }
@@ -109,7 +114,7 @@ void Lienzo::mousePressEvent(QMouseEvent *event){
         int coordY = InversaConvCoordY(event->pos().y());
 
         QPoint p(coordX,coordY);
-        puntosLocalizacion.push_back(p);
+        puntosLocalizacion->push_back(p);
     }
 
     update();

@@ -20,10 +20,10 @@ class Lienzo : public QWidget
 public:
     explicit Lienzo(QWidget *parent = 0);
     ~Lienzo();
-    vector<QPoint> puntos; //Array de puntos
-    list < pair<QPoint,QPoint> > ejes; //Ejes de la triangulación
-    vector<QPolygon> zonasLocalizadas; //Array de triangulo con las localizaciones
-    vector<QPoint> puntosLocalizacion;
+    vector<QPoint> *puntos; /**Array que contiene los puntos de la triangulación*/
+    list < pair<QPoint,QPoint> > *ejes; /**Ejes de la triangulación*/
+    vector<QPolygon> *zonasLocalizadas; /**Array de triangulo con las localizaciones*/
+    vector<QPoint> *puntosLocalizacion; /**Array que contiene los puntos de localización*/
 
     bool getBanderaPuntos();
     void setBanderaPuntosTrue();
