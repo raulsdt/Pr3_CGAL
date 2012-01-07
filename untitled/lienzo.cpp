@@ -72,9 +72,9 @@ void Lienzo::paintEvent(QPaintEvent *){
 
     for(unsigned int i = 0; i < zonasLocalizadas->size();i++){
 
-        QPoint p1 = (*zonasLocalizadas)[i].point(1);
-        QPoint p2 = (*zonasLocalizadas)[i].point(2);
-        QPoint p3 = (*zonasLocalizadas)[i].point(3);
+        QPoint p1 = zonasLocalizadas->at(i).point(0);
+        QPoint p2 = zonasLocalizadas->at(i).point(1);
+        QPoint p3 = zonasLocalizadas->at(i).point(2);
 
         QPolygon poli;
         poli << QPoint(convCoordX(p1.x()),convCoordY(p1.y()));

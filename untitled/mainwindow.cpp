@@ -172,13 +172,15 @@ void MainWindow::on_actionLocalizar_puntos_triggered()
         Point2D punto(l->puntosLocalizacion->at(i).x(),l->puntosLocalizacion->at(i).y());
 
         triangulo = dt->localizacion(punto);
-
+        cout << triangulo.size() << endl;
         if(triangulo.size() != 0){
             QPolygon poli;
-            poli.setPoint(1,triangulo[0].x(),triangulo[0].y());
-            poli.setPoint(2,triangulo[1].x(),triangulo[1].y());
-            poli.setPoint(3,triangulo[2].x(),triangulo[2].y());
-
+            //poli.setPoint(1,triangulo[0].x(),triangulo[0].y());
+            //poli.setPoint(2,triangulo[1].x(),triangulo[1].y());
+            //poli.setPoint(3,triangulo[2].x(),triangulo[2].y());
+            poli << QPoint(triangulo[0].x(),triangulo[0].y());
+            poli << QPoint(triangulo[1].x(),triangulo[1].y());
+            poli << QPoint(triangulo[2].x(),triangulo[2].y());
             l->zonasLocalizadas->push_back(poli);
         }
     }
