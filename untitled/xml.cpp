@@ -59,6 +59,8 @@ bool Xml::leerXml(vector<float> *vx,vector<float> *vy){
     }
     *vx = x;
     *vy = y;
+
+    return true;
 }
 
 /**
@@ -73,7 +75,7 @@ void Xml::escribeXml(vector<float> vx, vector<float> vy){
 
     //Creamos los elementos
 
-    for(int i = 0;i < vx.size();i++){
+    for(unsigned int i = 0;i < vx.size();i++){
         //Creamos un nodo punto
         QDomElement nodoPunto = documento.createElement("PUNTO");
 

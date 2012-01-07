@@ -38,10 +38,10 @@ void MainWindow::on_actionInsertar_puntos_toggled(bool arg1)
 {
     if(arg1){
         l->setBanderaPuntosTrue();
-        statusBar()->showMessage(trUtf8("Inserción de puntos: ACTIVADA"),5000);
+        statusBar()->showMessage(trUtf8("Inserción de puntos: ACTIVADA"),2000);
     }else{
         l->setBanderaPuntosFalse();
-        statusBar()->showMessage(trUtf8("Inserción de puntos: DESACTIVADA"),5000);
+        statusBar()->showMessage(trUtf8("Inserción de puntos: DESACTIVADA"),2000);
     }
 }
 
@@ -70,11 +70,11 @@ void MainWindow::on_actionBorra_pantalla_triggered()
     dt = new Delaunay();
 
     l->setBanderaTriangulacionFalse();
+
     l->puntos->clear();
     l->ejes->clear();
     l->puntosLocalizacion->clear();
     l->zonasLocalizadas->clear();
-
 
     statusBar()->showMessage(trUtf8("Pantalla borrada"),2000);
     l->update();
@@ -104,7 +104,7 @@ void MainWindow::on_actionTriangular_puntos_triggered(){
         //Hacemos la triangulación
         vector<Point2D> vPoint2D;
 
-        for(int i = 0; i < l->puntos->size();i++){
+        for(unsigned int i = 0; i < l->puntos->size();i++){
             Point2D p = Point2D(l->puntos->at(i).x(),l->puntos->at(i).y());
             vPoint2D.push_back(p);
         }
@@ -152,10 +152,10 @@ void MainWindow::on_actionInsertar_puntos_localizacion_toggled(bool arg1)
 
     if(arg1){
         l->setBanderaLocalizacionTrue();
-        statusBar()->showMessage(trUtf8("Inserción de puntos de localización ACTIVADA"),5000);
+        statusBar()->showMessage(trUtf8("Inserción de puntos de localización ACTIVADA"),2000);
     }else{
         l->setBanderaLocalizacionFalse();
-        statusBar()->showMessage(trUtf8("Inserción de puntos de localización DESACTIVAD"),5000);
+        statusBar()->showMessage(trUtf8("Inserción de puntos de localización DESACTIVAD"),2000);
     }
 }
 
@@ -168,7 +168,7 @@ void MainWindow::on_actionLocalizar_puntos_triggered()
 
     vector<Point2D> triangulo;
 
-    for(int i = 0;i<l->puntosLocalizacion->size();i++){
+    for(unsigned int i = 0; i < l->puntosLocalizacion->size(); i++){
         Point2D punto(l->puntosLocalizacion->at(i).x(),l->puntosLocalizacion->at(i).y());
 
         triangulo = dt->localizacion(punto);
@@ -183,7 +183,7 @@ void MainWindow::on_actionLocalizar_puntos_triggered()
         }
     }
 
-    statusBar()->showMessage(trUtf8("Localización realizada"),5000);
+    statusBar()->showMessage(trUtf8("Localización realizada"),2000);
     l->update();
 }
 
@@ -211,7 +211,7 @@ bool MainWindow::abrirXML(){
 
         archivo.leerXml(&vx,&vy);
 
-        for(int i = 0; i < vx.size();i++){
+        for(unsigned int i = 0; i < vx.size();i++){
             l->puntos->push_back(QPoint((int)vx[i],(int)vy[i]));
         }
 
@@ -237,7 +237,7 @@ bool MainWindow::guardarXML(){
         vector<float> vx;
         vector<float> vy;
 
-        for(int i = 0; i< l->puntos->size();i++){
+        for(unsigned int i = 0; i< l->puntos->size();i++){
             vx.push_back(l->puntos->at(i).x());
             vy.push_back(l->puntos->at(i).y());
         }

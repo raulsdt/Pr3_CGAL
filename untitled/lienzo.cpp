@@ -48,26 +48,29 @@ void Lienzo::paintEvent(QPaintEvent *){
     QPen estilo(Qt::black,5,Qt::SolidLine,Qt::RoundCap,Qt::MiterJoin);
     pintor.setPen(estilo);
 
-    for(int i = 0;i < puntos->size();i++){
-        pintor.drawPoint(convCoordX((*puntos)[i].x()),convCoordY((*puntos)[i].y()));
+    for(unsigned int i = 0;i < puntos->size();i++){
+        pintor.drawPoint(convCoordX(puntos->at(i).x()),convCoordY(puntos->at(i).y()));
     }
 
     //Dibujamos ejes de la Triangulación
-    list < pair<QPoint,QPoint> >::iterator  begin = ejes->begin();
-    list < pair<QPoint,QPoint> >::iterator  end = ejes->end();
+    if(puntos->size() != 0){
 
-    QPen estiloLinea(Qt::red,1,Qt::SolidLine,Qt::RoundCap,Qt::MiterJoin);
-    pintor.setPen(estiloLinea);
+        list < pair<QPoint,QPoint> >::iterator  begin = ejes->begin();
+        list < pair<QPoint,QPoint> >::iterator  end = ejes->end();
 
-    for(;begin!=end;begin++){
-        pintor.drawLine(convCoordX(begin->first.x()),convCoordY(begin->first.y()),convCoordX(begin->second.x()),convCoordY(begin->second.y()));
+        QPen estiloLinea(Qt::red,1,Qt::SolidLine,Qt::RoundCap,Qt::MiterJoin);
+        pintor.setPen(estiloLinea);
+
+        for(;begin!=end;begin++){
+            pintor.drawLine(convCoordX(begin->first.x()),convCoordY(begin->first.y()),convCoordX(begin->second.x()),convCoordY(begin->second.y()));
+        }
     }
 
     //Dibujamos zonas de localización
     QBrush estiloZona(Qt::yellow,Qt::DiagCrossPattern);
     pintor.setBrush(estiloZona);
 
-    for(int i = 0; i < zonasLocalizadas->size();i++){
+    for(unsigned int i = 0; i < zonasLocalizadas->size();i++){
 
         QPoint p1 = (*zonasLocalizadas)[i].point(1);
         QPoint p2 = (*zonasLocalizadas)[i].point(2);
@@ -85,7 +88,7 @@ void Lienzo::paintEvent(QPaintEvent *){
     QPen estiloPuntoLocalizado(Qt::darkBlue,5,Qt::SolidLine,Qt::RoundCap,Qt::MiterJoin);
     pintor.setPen(estiloPuntoLocalizado);
 
-    for(int i = 0;i < puntosLocalizacion->size();i++){
+    for(unsigned int i = 0;i < puntosLocalizacion->size();i++){
         pintor.drawPoint(convCoordX((*puntosLocalizacion)[i].x()),convCoordY((*puntosLocalizacion)[i].y()));
     }
 
